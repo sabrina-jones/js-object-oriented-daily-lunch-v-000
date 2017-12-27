@@ -22,3 +22,29 @@ class Delivery {
     })
   }
 }
+
+class Meal {
+  constructor(title, price){
+    this.id = ++mealId;
+    this.title = title;
+    this.price = price;
+    store.meals.push(this);
+  }
+  deliveries(){
+    return store.deliveries.filter(delivery=>{
+      return delivery.mealId === this.id;
+      //returns array of deliveries that include meal
+    });
+  }
+  customers(){
+    return this.deliveries().map(delivery=>{
+      return delivery.customer();
+      //iterates over deliveries and returns array of customers
+    });
+  }
+  static byPrice(){
+    return store.meals.sort((meal1, meal2)=>{
+      return meal1.price < meal2.price;
+    });
+  }
+}
