@@ -46,3 +46,28 @@ class Meal {
     });
   }
 }
+
+class Customer {
+  constructor(name, employer={}){
+    this.id = ++customerId;
+    this.name = name;
+    this.employerId = employer.id;
+    store.customers.push(this);
+  }
+  deliveries(){
+    return store.deliveries.filter(delivery=>{
+      return delivery.customerId === this.id;
+    });
+  }
+  meals(){
+    //customer has meals through delivery
+    return this.deliveries().map(delivery=>{
+      return delivery.meal();
+    })
+  }
+  totalSpent() {
+    return this.meals().reduce(function(sum, meal) {
+      return sum + meal.price;
+    }, 0);
+  }
+}
