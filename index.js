@@ -37,7 +37,7 @@ class Meal {
     });
   }
   customers(){
-    return this.deliveries().map(delivery=>{
+    return this.deliveries().filter(delivery=>{
       return delivery.customer();
       //iterates over deliveries and returns array of customers
     });
