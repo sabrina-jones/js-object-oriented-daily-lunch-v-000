@@ -71,3 +71,51 @@ class Customer {
     }, 0);
   }
 }
+
+class Employer {
+  constructor(name){
+    this.id = ++employerId;
+    this.name = name;
+    store.employers.push(this);
+  }
+
+  employees(){
+    return store.customers.filter(customer=>{
+      return customer.employerId === this.id;
+      //returns array of employer's customers (aka employees)
+    });
+  }
+  deliveries(){
+    let allDeliveries = this.employees().map(employee=>{
+      return employee.deliveries();
+      //iterates over employees and returns array of employees' deliveries
+    });
+    let merged = [].concat.apply([], allDeliveries);
+    return merged;
+  }
+
+  allMeals(){
+    return this.deliveries().map(delivery=>{
+      return delivery.meal()
+    })
+  }
+
+  meals(){
+    return this.allMeals().filter(function(e, i, a){
+      return a.indexOf(e) === i;});
+    }
+
+  mealTotals(){
+     let mealCount = {}
+     let meals = this.allMeals()
+
+     meals.forEach(function(meal){
+       if(mealCount[meal.id]){
+         mealCount[meal.id]++;
+       }else{
+         mealCount[meal.id] = 1;
+       }
+     })
+     return mealCount;
+   }
+}
