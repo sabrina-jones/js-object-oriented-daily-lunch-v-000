@@ -33,13 +33,11 @@ class Meal {
   deliveries(){
     return store.deliveries.filter(delivery=>{
       return delivery.mealId === this.id;
-      //returns array of deliveries that include meal
     });
   }
   customers(){
     return this.deliveries().filter(delivery=>{
       return delivery.customer();
-      //iterates over deliveries and returns array of customers
     });
   }
   static byPrice(){
